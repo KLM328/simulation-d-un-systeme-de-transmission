@@ -1,0 +1,2 @@
+echo Running simulateur/Simulateur
+java -cp bin/src simulateur/Simulateur "$@"

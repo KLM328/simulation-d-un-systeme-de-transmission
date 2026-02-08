@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# Chemin vers les bibliothèques nécessaires (à adapter selon votre projet)
+JUNIT_JAR="lib/junit-4.13.2.jar"
+HAMCREST_JAR="lib/hamcrest-core-1.3.jar"
+MOKITO_JAR="lib/mockito-core-3.12.4.jar"
+BYTE_BUDDY_JAR="lib/byte-buddy-1.14.17.jar"
+OBJENESIS_JAR="lib/objenesis-3.4.jar"
+ASM_JAR="lib/asm-9.7.jar"
+
+# Chemin vers les dossiers de sortie
+SRC_OUTPUT="bin/src"
+TEST_OUTPUT="bin/tests"
+
+# Créer les dossiers de sortie s'ils n'existent pas
+mkdir -p "$SRC_OUTPUT"
+mkdir -p "$TEST_OUTPUT"
+
+# Compilation des sources principales
+echo "Compilation des sources principales..."
+find src -name "*.java" | xargs javac -d "$SRC_OUTPUT"
+echo "Simulateur has been compiled"
+
+# Compilation des tests avec le classpath complet
+echo "Compilation des tests..."
+CLASSPATH="$SRC_OUTPUT:$JUNIT_JAR:$HAMCREST_JAR:$MOKITO_JAR:$BYTE_BUDDY_JAR:$OBJENESIS_JAR:$ASM_JAR"
+find tests -name "*.java" | xargs javac -cp "$CLASSPATH" -d "$TEST_OUTPUT"
+echo "Tests have been compiled"

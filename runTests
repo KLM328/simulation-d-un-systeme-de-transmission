@@ -1,0 +1,61 @@
+#!/bin/bash
+
+# ==============================
+# Définition des bibliothèques nécessaires
+# ==============================
+JUNIT_JAR="lib/junit-4.13.2.jar"
+HAMCREST_JAR="lib/hamcrest-core-1.3.jar"
+MOCKITO_JAR="lib/mockito-core-3.12.4.jar"
+BYTE_BUDDY_JAR="lib/byte-buddy-1.14.17.jar"
+OBJENESIS_JAR="lib/objenesis-3.4.jar"
+ASM_JAR="lib/asm-9.7.jar"
+
+# ==============================
+# Définition des dossiers de sortie
+# ==============================
+SRC_OUTPUT="bin/src"
+TEST_OUTPUT="bin/tests"
+
+# ==============================
+# Vérification des bibliothèques
+# ==============================
+requiredJars=("$JUNIT_JAR" "$HAMCREST_JAR" "$MOCKITO_JAR" "$BYTE_BUDDY_JAR" "$OBJENESIS_JAR" "$ASM_JAR")
+for jar in "${requiredJars[@]}"; do
+    if [ ! -f "$jar" ]; then
+        echo "Erreur : le fichier $jar est introuvable."
+        exit 1
+    fi
+done
+
+# ==============================
+# Construction du classpath
+# ==============================
+# Utiliser ":" au lieu de ";" sous Linux/Mac
+CLASSPATH="$TEST_OUTPUT:$SRC_OUTPUT:$(IFS=:; echo "${requiredJars[*]}")"
+echo "CLASSPATH = $CLASSPATH"
+
+# ==============================
+# Détection automatique des classes de test
+# ==============================
+testClasses=()
+while IFS= read -r -d '' file; do
+    # Supprime le préfixe du chemin et l'extension .class
+    relativePath="${file#$TEST_OUTPUT/}"
+    className="${relativePath%.class}"
+    # Remplace les / par des .
+    className="${className//\//.}"
+    testClasses+=("$className")
+done < <(find "$TEST_OUTPUT" -type f -name "*Test.class" -print0)
+
+if [ ${#testClasses[@]} -eq 0 ]; then
+    echo "Aucune classe de test trouvée dans $TEST_OUTPUT"
+    exit 1
+fi
+
+echo "Tests détectés :"
+for cls in "${testClasses[@]}"; do
+    echo " - $cls"
+done
+
+echo "Exécution des tests..."
+java -cp "$CLASSPATH" org.junit.runner.JUnitCore "${testClasses[@]}"

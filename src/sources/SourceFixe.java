@@ -2,7 +2,9 @@ package sources;
 
 import information.Information;
 
-public class SourceFixe extends Source<Boolean>{
+public class SourceFixe extends sources.Source<Boolean> {
+
+	private Information<Boolean> informationGeneree;
 
 	 /**
      * Une source qui envoie toujours le même message

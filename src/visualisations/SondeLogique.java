@@ -7,7 +7,7 @@ import information.Information;
  * booléens
  * @author prou
  */
-public class SondeLogique extends Sonde <Boolean> {
+public class SondeLogique extends visualisations.Sonde<Boolean> {
    
     /** le nombre de pixels en largeur pour un élément d'information
      * Boolean à afficher dans la fenêtre */
@@ -22,7 +22,8 @@ public class SondeLogique extends Sonde <Boolean> {
 	super(nom);
 	this.nbPixels = nbPixels;
     }
-    
+
+    @Override
     public void recevoir (Information <Boolean> information) { 
 	informationRecue = information;
 	int nbElements = information.nbElements();
@@ -32,6 +33,6 @@ public class SondeLogique extends Sonde <Boolean> {
             table[i] = b;
             i++;
 	}
-      	new VueCourbe (table,  nbPixels, nom); 
+      	new visualisations.VueCourbe(table,  nbPixels, nom);
     }
 }

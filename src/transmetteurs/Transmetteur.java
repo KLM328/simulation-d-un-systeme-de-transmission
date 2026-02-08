@@ -1,9 +1,5 @@
 package transmetteurs;
 
-import sources.*;
-import destinations.*;
-import information.*;
-
 import java.util.*;
 
 /** 
@@ -14,29 +10,29 @@ import java.util.*;
  * l'interface SourceInterface
  * @author prou
  */
-public abstract  class Transmetteur <R,E> implements  DestinationInterface <R>, SourceInterface <E> {
+public abstract  class Transmetteur <R,E> implements destinations.DestinationInterface<R>, sources.SourceInterface<E> {
    
     /** 
      * la liste des composants destination connectés en sortie du transmetteur 
      */
-    protected LinkedList <DestinationInterface <E>> destinationsConnectees;
+    protected LinkedList <destinations.DestinationInterface<E>> destinationsConnectees;
    
     /** 
      * l'information reçue en entrée du transmetteur 
      */
-    protected Information <R>  informationRecue;
+    protected information.Information<R> informationRecue;
 		
     /** 
      * l'information émise en sortie du transmetteur
      */		
-    protected Information <E>  informationEmise;
+    protected information.Information<E> informationEmise;
    
     /** 
      * un constructeur factorisant les initialisations communes aux
      * réalisations de la classe abstraite Transmetteur
      */
     public Transmetteur() {
-	destinationsConnectees = new LinkedList <DestinationInterface <E>> ();
+	destinationsConnectees = new LinkedList <destinations.DestinationInterface<E>> ();
 	informationRecue = null;
 	informationEmise = null;
     }
@@ -46,8 +42,8 @@ public abstract  class Transmetteur <R,E> implements  DestinationInterface <R>, 
      * transmetteur
      * @return une information   
      */
-    public Information <R>  getInformationRecue() {
-	return this.informationRecue;
+    public information.Information<R> getInformationRecue() {
+	    return this.informationRecue;
     }
 
     /**
@@ -55,7 +51,7 @@ public abstract  class Transmetteur <R,E> implements  DestinationInterface <R>, 
      * transmetteur
      * @return une information   
      */
-    public Information <E>  getInformationEmise() {
+    public information.Information<E> getInformationEmise() {
 	return this.informationEmise;
     }
 
@@ -63,7 +59,7 @@ public abstract  class Transmetteur <R,E> implements  DestinationInterface <R>, 
      * connecte une destination à la sortie du transmetteur
      * @param destination  la destination à connecter
      */
-    public void connecter (DestinationInterface <E> destination) {
+    public void connecter (destinations.DestinationInterface<E> destination) {
 	destinationsConnectees.add(destination); 
     }
 

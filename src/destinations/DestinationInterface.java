@@ -1,6 +1,5 @@
 package destinations;
 
-import information.*;
 
 
 /** 
@@ -14,14 +13,14 @@ public  interface DestinationInterface <T>  {
      * pour obtenir la dernière information reçue par une destination.
      * @return une information   
      */  
-    public Information <T>  getInformationRecue(); 
+    public information.Information<T> getInformationRecue();
    	 
     /**
      * pour recevoir une information de la source qui nous est
      * connectée
      * @param information  l'information  à recevoir
-     * @throws InformationNonConformeException si l'Information comporte des anomalies
+     * @throws information.InformationNonConformeException si l'Information comporte des anomalies
      */
-    public void recevoir(Information <T> information) throws InformationNonConformeException;
+    public void recevoir(information.Information<T> information) throws information.InformationNonConformeException;
    
 }

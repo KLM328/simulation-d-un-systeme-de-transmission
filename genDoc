@@ -1,0 +1,13 @@
+#!/bin/bash
+
+mkdir -p docs
+
+javadoc \
+  -quiet \
+  -Xdoclint:none \
+  -encoding UTF-8 \
+  -docencoding UTF-8 \
+  -charset UTF-8 \
+  -d docs $(find src -name "*.java")
+
+echo "Javadoc has been generated"
